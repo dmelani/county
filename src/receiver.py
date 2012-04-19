@@ -1,4 +1,3 @@
-import Queue
 import time
 import SocketServer
 
@@ -14,6 +13,7 @@ class Receiver(SocketServer.UDPServer):
 		SocketServer.UDPServer.__init__(self,server_address,RequestHandlerClass)
 
 if __name__ == '__main__':
+	import Queue
 	queue = Queue.Queue()
 	server = Receiver(('localhost', 9999), ReceiverHandler, queue)
 	server.serve_forever()
