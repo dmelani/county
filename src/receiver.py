@@ -9,6 +9,8 @@ class ReceiverHandler(SocketServer.BaseRequestHandler):
 			self.server.queue.put_nowait((timestamp, data))	
 		except Exception:
 			print 'MALFORMED DATA RECEIVED'
+		except Full:
+			pass
 	
 class Receiver(SocketServer.UDPServer):
 	def __init__(self, server_address, queue):
