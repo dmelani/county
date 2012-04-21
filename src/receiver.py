@@ -14,6 +14,7 @@ class ReceiverHandler(SocketServer.BaseRequestHandler):
 	
 class Receiver(SocketServer.UDPServer):
 	def __init__(self, server_address, queue):
+		print 'Receiver powering up...'
 		self.queue = queue
 		SocketServer.UDPServer.__init__(self, server_address, ReceiverHandler)
 

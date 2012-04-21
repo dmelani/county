@@ -5,6 +5,7 @@ class Mediator(object):
 	last_num_lines = 0
 
 	def __init__(self, rm_q, me_q):
+		print 'Mediator initializing...'
 		self.rm_q = rm_q
 		self.me_q = me_q
 
