@@ -1,4 +1,5 @@
 import time
+import Queue
 
 class Mediator(object):
 	last_event = None
@@ -9,10 +10,19 @@ class Mediator(object):
 		self.rm_q = rm_q
 		self.me_q = me_q
 
-	def run(self):
+	def start(self):
 		while True:
-			data = self.rm_q.get(True)
-			self.handle_event(data)
+			try:
+				data = self.rm_q.get(True, 1.0)
+			except Queue.Empty:
+				pass
+			else:
+				self.handle_event(data)
+	def run(self):
+		try:
+			self.start()
+		except:
+			return
 	
 	def handle_event(self, data):
 		timestamp, lines = data

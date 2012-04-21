@@ -29,6 +29,7 @@ class County(object):
 		self.engine.run()
 	
 		self.kill_children()
+		sys.exit(0)
 
 	def interrupt_handler(self, signum, frame):
 		#do cleanup here
@@ -36,13 +37,19 @@ class County(object):
 		sys.exit(0)
 	
 	def kill_children(self):
-		try:
+		print 'And all the children shall die...'
+		if self.rec_proc.is_alive():
+			print "Killing receiver"
 			self.rec_proc.terminate()
+			self.rec_proc.join()
+		if self.med_proc.is_alive():
+			print "Killing mediator"
 			self.med_proc.terminate()
-		except:
-			return
-
+			self.med_proc.join()
+		print 'done'
+	
 if __name__ == '__main__':
 	c = County()
 	c.run()
+	print 'Time to quit'
 
