@@ -17,6 +17,11 @@ class Receiver(SocketServer.UDPServer):
 		print 'Receiver powering up...'
 		self.queue = queue
 		SocketServer.UDPServer.__init__(self, server_address, ReceiverHandler)
+	def run(self):
+		try:
+			self.serve_forever()
+		except: 
+			return
 
 if __name__ == '__main__':
 	import Queue

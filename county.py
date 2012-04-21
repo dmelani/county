@@ -12,7 +12,7 @@ class County(object):
 		self.me_q = multiprocessing.Queue()
 
 		self.receiver = receiver.Receiver(('', config.port), self.rm_q)
-		self.rec_proc = multiprocessing.Process(target=self.receiver.serve_forever)
+		self.rec_proc = multiprocessing.Process(target=self.receiver.run)
 		self.rec_proc.daemon = True
 
 		self.mediator = mediator.Mediator(self.rm_q, self.me_q)
@@ -20,23 +20,27 @@ class County(object):
 		self.med_proc.daemon = True
 
 		self.engine = engine.Engine(self.me_q)
-		self.eng_proc = multiprocessing.Process(target=self.engine.run)
-		self.eng_proc.daemon = True
-
 		signal.signal(signal.SIGINT, self.interrupt_handler)
 
 	def run(self):
 		self.rec_proc.start()
 		self.med_proc.start()
-		self.eng_proc.start()
-		while True:
-			self.rec_proc.join(1.0)
-			self.med_proc.join(1.0)
-			self.eng_proc.join(1.0)
+
+		self.engine.run()
 	
+		self.kill_children()
+
 	def interrupt_handler(self, signum, frame):
 		#do cleanup here
+		self.kill_children()
 		sys.exit(0)
+	
+	def kill_children(self):
+		try:
+			self.rec_proc.terminate()
+			self.med_proc.terminate()
+		except:
+			return
 
 if __name__ == '__main__':
 	c = County()

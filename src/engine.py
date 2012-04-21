@@ -1,5 +1,6 @@
 import firmament
 import pygame
+from pygame.locals import *
 import time
 
 class Engine(object):
@@ -12,12 +13,11 @@ class Engine(object):
 	def run(self):
 		while not self.done:
 			#do everything
-			#self.handle_events()
+			self.handle_events()
 			pygame.display.flip()
-"""	
 	def handle_events(self):
 		events = pygame.event.get()
 		for event in events:
-			if event.type == QUIT  or event.type == KEYDOWN and event.key == K_ESCAPE:
+			if event.type == KEYDOWN and event.key == K_ESCAPE:
 				self.done = True
-"""
+
