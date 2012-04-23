@@ -12,7 +12,8 @@ class Firmament(object):
 		pygame.display.set_mode((self.width,self.height), pygame.OPENGL|pygame.DOUBLEBUF)
 		glViewport(0, 0, self.width, self.height)
 		glEnable(GL_DEPTH_TEST)
-		glClearColor(1.0, 0.0, 1.0, 1.0)
+		glClearColor(0.0, 0.0, 0.0, 1.0)
+		glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 
 	def clear(self):
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)

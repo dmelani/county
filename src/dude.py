@@ -25,5 +25,5 @@ class Dude(object):
 		glMatrixMode(GL_PROJECTION)
 		glLoadIdentity()
 		gluPerspective(90,800.0/600.0,1.0,200.0)
-		gluLookAt(self.pos_x, self.pos_y, self.pos_z, self.l_x, self.l_y, self.l_z, 0.0, -1.0, 0.0)			
+		gluLookAt(self.pos_x, self.pos_y, self.pos_z, self.l_x, self.l_y, self.l_z, 0.0, 1.0, 0.0)			
 
