@@ -27,6 +27,7 @@ class Mediator(object):
 	def handle_event(self, data):
 		timestamp, lines = data
 		try:
+			timestamp = int(timestamp)
 			lines = int(lines)
 		except ValueError:
 			lines = None
