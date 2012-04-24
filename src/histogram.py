@@ -14,7 +14,16 @@ class Staple(object):
 		glPushMatrix()
 		glTranslate(0, self.amount / 2.0, 0)
 		glScale(self.width, self.amount, self.depth)
+		
+		glPolygonOffset(1.0, 1.0)
+		glEnable(GL_POLYGON_OFFSET_FILL)
+		glColor(0.7, 0.7, 0.7)
 		glutSolidCube(1)
+
+		glDisable(GL_POLYGON_OFFSET_FILL)
+		glColor(0.3, 0.3, 0.3)
+		glutWireCube(1)
+		
 		glPopMatrix()
 
 	def add(self, amount):

@@ -13,7 +13,7 @@ class Firmament(object):
 		glViewport(0, 0, self.width, self.height)
 		glEnable(GL_DEPTH_TEST)
 		glClearColor(0.0, 0.0, 0.0, 1.0)
-		glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
+#		glPolygonMode( GL_FRONT_AND_BACK, GL_LINE );
 
 	def clear(self):
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT)
