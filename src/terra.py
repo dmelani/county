@@ -26,7 +26,9 @@ class Terra(object):
 			self.current_day = current_day
 	
 		#update EVERYTHING
-		
+		for entity in self.entities:
+			entity.update(now)
+				
 		self.timestamp = now	
 	
 	def render(self):

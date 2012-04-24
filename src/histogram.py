@@ -29,6 +29,9 @@ class Staple(object):
 	def add(self, amount):
 		self.amount += amount
 
+	def update(self, ts):
+		pass
+
 class HistogramRow(object):
 	def __init__(self, num_staples = 24):
 		self.buckets = [Staple() for x in range(num_staples)]
@@ -43,6 +46,10 @@ class HistogramRow(object):
 
 	def add(self, bucket, amount):
 		self.buckets[bucket].add(amount)
+
+	def update(self, ts):
+		for b in self.buckets:
+			b.update(ts)
 
 class Histogram(object):
 	def __init__(self, hours = 24, days = 7):
@@ -67,3 +74,6 @@ class Histogram(object):
 		self.days.pop()
 		self.days.insert(0, HistogramRow(24))
 		
+	def update(self, ts):
+		for d in self.days:
+			d.update(ts)
