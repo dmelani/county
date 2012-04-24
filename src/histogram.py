@@ -17,11 +17,11 @@ class Staple(object):
 		
 		glPolygonOffset(1.0, 1.0)
 		glEnable(GL_POLYGON_OFFSET_FILL)
-		glColor(0.7, 0.7, 0.7)
+		glColor(0x23/float(0xff), 0x8c/float(0xff), 0x47/float(0xff))
 		glutSolidCube(1)
 
 		glDisable(GL_POLYGON_OFFSET_FILL)
-		glColor(0.3, 0.3, 0.3)
+		glColor(0x1a/float(0xff), 0xa6/float(0xff), 0x00/float(0xff))
 		glutWireCube(1)
 		
 		glPopMatrix()
