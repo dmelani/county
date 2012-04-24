@@ -2,6 +2,7 @@ from OpenGL.GL import *
 from OpenGL.GLU import * 
 from OpenGL.GLUT import * 
 import time
+import datetime
 import histogram
 
 class Terra(object):
@@ -10,6 +11,7 @@ class Terra(object):
 		self.entities = []
 		self.histogram = histogram.Histogram()
 		self.entities.append(self.histogram)
+		self.current_day = datetime.datetime.now().day
 
 	def add(self, amount):
 		self.histogram.add(amount)
@@ -17,6 +19,11 @@ class Terra(object):
 	def revolve(self):
 		now = time.time()
 		delta = now - self.timestamp
+		current_day = datetime.datetime.now().day
+
+		if current_day > self.current_day:
+			self.histogram.advance_day()
+			self.current_day = current_day
 	
 		#update EVERYTHING
 		

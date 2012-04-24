@@ -62,3 +62,8 @@ class Histogram(object):
 		bucket = bucket
 		print 'History adding', amount, 'to', bucket
 		self.days[0].add(bucket, amount)
+
+	def advance_day(self):
+		self.days.pop()
+		self.days.insert(0, HistogramRow(24))
+		
