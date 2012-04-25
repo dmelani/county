@@ -7,20 +7,21 @@ import datetime
 class Increment(object):
 	def __init__(self, amount, duration):
 		self.amount = amount
-		self.duration = duration
+		self.start = time.time()
+		self.end = self.start + duration
+		self.curr_val = 0.0
+		self.is_complete = False
 		
-	def increment(self, delta_time):
-		if self.amount == None:
-			return None
-
-		delta_amount = self.amount * delta_time / self.duration
-		if delta_amount > self.amount:
-			delta_amount = self.amount
-			self.amount = None
+	def update(self, ts):
+		if ts > self.end:
+			self.curr_val = self.amount
+			self.is_complete = True
 		else:
-			self.amount -= delta_amount
-		
-		return delta_amount
+			self.curr_val = self.amount * (ts - self.start)/(self.end - self.start)
+
+	def get(self):
+		return self.curr_val
+	
 
 class Staple(object):
 	def __init__(self, width = 1, depth = 1, initial_amount = 0):
@@ -28,11 +29,12 @@ class Staple(object):
 		self.width = width
 		self.depth = depth
 		self.flux = []
+		self.inc = 0.0
 
 	def render(self):
 		glPushMatrix()
-		glTranslate(0, self.amount / 2.0, 0)
-		glScale(self.width, self.amount, self.depth)
+		glTranslate(0, (self.amount + self.inc) / 2.0, 0)
+		glScale(self.width, self.amount + self.inc, self.depth)
 		
 		glPolygonOffset(1.0, 1.0)
 		glEnable(GL_POLYGON_OFFSET_FILL)
@@ -52,15 +54,14 @@ class Staple(object):
 		self.flux.append(Increment(amount, seconds))
 
 	def update(self, ts):
-		new_flux = []
+		self.inc = 0.0
 		for a in self.flux:
-			inc = a.increment(ts)
-			if inc is not None:
-				new_flux.append(a)
-				print "increasing with:", inc
-				self.amount += inc
-		self.flux = new_flux
-
+			a.update(ts)
+			if a.is_complete == True:
+				self.amount += a.get()
+			else:
+				self.inc += a.get()
+		self.flux = [a for a in self.flux if a.is_complete is False] 
 
 class HistogramRow(object):
 	def __init__(self, num_staples = 24):
@@ -110,7 +111,5 @@ class Histogram(object):
 		self.days.insert(0, HistogramRow(24))
 		
 	def update(self, ts):
-		self.last_ts = ts
 		for d in self.days:
-			d.update(ts - self.last_ts)
-		self.last_ts = ts
+			d.update(ts)
