@@ -14,8 +14,8 @@ class Engine(object):
 		self.firmament = firmament.Firmament()
 		self.terra = terra.Terra()
 		self.dude = dude.Dude()
-		self.dude.move(10.0, 10.0, 5.0)
-		self.dude.look_at(12.0, 3.5, 0.0)
+		self.dude.move(300.0, 100.0, 300.0)
+		self.dude.look_at(600.0, 3.5, 0.0)
 		self.done = False
 
 	def run(self):

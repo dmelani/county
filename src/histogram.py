@@ -38,11 +38,11 @@ class Staple(object):
 		
 		glPolygonOffset(1.0, 1.0)
 		glEnable(GL_POLYGON_OFFSET_FILL)
-		glColor(0x23/float(0xff), 0x8c/float(0xff), 0x47/float(0xff))
+		glColor(0x00/float(0xff), 0x50/float(0xff), 0x60/float(0xff))
 		glutSolidCube(1)
 
 		glDisable(GL_POLYGON_OFFSET_FILL)
-		glColor(0x1a/float(0xff), 0xa6/float(0xff), 0x00/float(0xff))
+		glColor(0x00/float(0xff), 0xff/float(0xff), 0xff/float(0xff))
 		glutWireCube(1)
 		
 		glPopMatrix()
@@ -89,15 +89,20 @@ class Histogram(object):
 	def __init__(self, hours = 24, days = 7):
 		self.days = [HistogramRow(hours) for x in range(days)]
 		self.last_ts = time.time() 	
+		self.width = 50.0
+		self.depth = 50.0
 
 	def render(self):
 		dc = 0	
+		glPushMatrix()
+		glScale(self.width, 1.0, self.depth)
 		for day in self.days:
 			glPushMatrix()
 			glTranslate(0, 0, -dc)
 			day.render()
 			glPopMatrix()
 			dc += 1
+		glPopMatrix()
 
 	def add(self, amount):
 		bucket = datetime.datetime.now().hour
