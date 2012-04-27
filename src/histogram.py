@@ -21,9 +21,11 @@ class Increment(object):
 
 	def get(self):
 		return self.curr_val
+
+
 	
 
-class Staple(object):
+class Bin(object):
 	def __init__(self, width = 1, depth = 1, initial_amount = 0):
 		self.amount = initial_amount
 		self.width = width
@@ -64,8 +66,8 @@ class Staple(object):
 		self.flux = [a for a in self.flux if a.is_complete is False] 
 
 class HistogramRow(object):
-	def __init__(self, num_staples = 24):
-		self.buckets = [Staple() for x in range(num_staples)]
+	def __init__(self, num_bins = 24):
+		self.buckets = [Bin() for x in range(num_bins)]
 	def render(self):
 		bc = 0
 		for bucket in self.buckets:
