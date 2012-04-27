@@ -32,6 +32,29 @@ class Bin(object):
 		self.depth = depth
 		self.flux = []
 		self.inc = 0.0
+		self.threshold_interval = 100
+
+	def render_thresholds(self):
+		for x in xrange(1, int((self.inc + self.amount)/self.threshold_interval)+1):
+			glPushMatrix()
+			glTranslate(0.0, x*self.threshold_interval, 0.0)
+
+			glDisable(GL_POLYGON_OFFSET_FILL)
+			glColor(0x00/float(0xff), 0xff/float(0xff), 0xff/float(0xff))
+			glutWireCube(1)
+
+			glScale(3.0, 0.0, 3.0)
+
+			glPolygonOffset(1.0, 1.0)
+			glEnable(GL_POLYGON_OFFSET_FILL)
+			glColor(0x00/float(0xff), 0xff/float(0xff), 0xff/float(0xff), 0.4)
+			glutSolidCube(1)
+
+			glDisable(GL_POLYGON_OFFSET_FILL)
+			glColor(0x00/float(0xff), 0xff/float(0xff), 0xff/float(0xff))
+			glutWireCube(1)
+
+			glPopMatrix()
 
 	def render(self):
 		glPushMatrix()
@@ -46,8 +69,10 @@ class Bin(object):
 		glDisable(GL_POLYGON_OFFSET_FILL)
 		glColor(0x00/float(0xff), 0xff/float(0xff), 0xff/float(0xff))
 		glutWireCube(1)
-		
+
 		glPopMatrix()
+
+		self.render_thresholds()
 
 	def add(self, amount):
 		self.amount += amount
