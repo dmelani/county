@@ -22,9 +22,38 @@ class Increment(object):
 	def get(self):
 		return self.curr_val
 
-
+class Threshold(object):
+	def __init__(self, pos, fade_in = 1.0):
+		self.pos = pos
+		self.alpha = 0.0
+		self.inc = Increment(1.0, 0.5)	
 	
+	def render(self):
+		glPushMatrix()
+		glTranslate(0.0, self.pos, 0.0)
 
+		glDisable(GL_POLYGON_OFFSET_FILL)
+		glColor(0x00/float(0xff), 0xff/float(0xff), 0xff/float(0xff), self.alpha)
+		glutWireCube(1)
+
+		glScale(3.0, 0.0, 3.0)
+
+		glPolygonOffset(1.0, 1.0)
+		glEnable(GL_POLYGON_OFFSET_FILL)
+		glColor(0x00/float(0xff), 0xff/float(0xff), 0xff/float(0xff), 0.4*self.alpha)
+		glutSolidCube(1)
+
+		glDisable(GL_POLYGON_OFFSET_FILL)
+		glColor(0x00/float(0xff), 0xff/float(0xff), 0xff/float(0xff), self.alpha)
+		glutWireCube(1)
+
+		glPopMatrix()
+
+	def update(self, ts):
+		if self.inc.is_complete is False:
+			self.inc.update(ts)
+			self.alpha = self.inc.get()
+		
 class Bin(object):
 	def __init__(self, width = 1, depth = 1, initial_amount = 0):
 		self.amount = initial_amount
@@ -33,29 +62,13 @@ class Bin(object):
 		self.flux = []
 		self.inc = 0.0
 		self.threshold_interval = 100
+		self.thresholds = []
+		self.last_threshold = 0
 
 	def render_thresholds(self):
-		for x in xrange(1, int((self.inc + self.amount)/self.threshold_interval)+1):
-			glPushMatrix()
-			glTranslate(0.0, x*self.threshold_interval, 0.0)
-
-			glDisable(GL_POLYGON_OFFSET_FILL)
-			glColor(0x00/float(0xff), 0xff/float(0xff), 0xff/float(0xff))
-			glutWireCube(1)
-
-			glScale(3.0, 0.0, 3.0)
-
-			glPolygonOffset(1.0, 1.0)
-			glEnable(GL_POLYGON_OFFSET_FILL)
-			glColor(0x00/float(0xff), 0xff/float(0xff), 0xff/float(0xff), 0.4)
-			glutSolidCube(1)
-
-			glDisable(GL_POLYGON_OFFSET_FILL)
-			glColor(0x00/float(0xff), 0xff/float(0xff), 0xff/float(0xff))
-			glutWireCube(1)
-
-			glPopMatrix()
-
+		for t in self.thresholds:
+			t.render()
+	
 	def render(self):
 		glPushMatrix()
 		glTranslate(0, (self.amount + self.inc) / 2.0, 0)
@@ -89,6 +102,13 @@ class Bin(object):
 			else:
 				self.inc += a.get()
 		self.flux = [a for a in self.flux if a.is_complete is False] 
+	
+		ct = int((self.inc + self.amount) / self.threshold_interval)
+		for p in range(self.last_threshold, ct):
+			self.thresholds.append(Threshold((p + 1) * self.threshold_interval, 0.25))
+
+		for t in self.thresholds:
+			t.update(ts)
 
 class HistogramRow(object):
 	def __init__(self, num_bins = 24):
