@@ -26,7 +26,7 @@ class Threshold(object):
 	def __init__(self, pos, fade_in = 1.0):
 		self.pos = pos
 		self.alpha = 0.0
-		self.inc = Increment(1.0, 0.5)	
+		self.inc = Increment(1.0, fade_in)	
 	
 	def render(self):
 		glPushMatrix()
@@ -105,7 +105,7 @@ class Bin(object):
 	
 		ct = int((self.inc + self.amount) / self.threshold_interval)
 		for p in range(self.last_threshold, ct):
-			self.thresholds.append(Threshold((p + 1) * self.threshold_interval, 0.25))
+			self.thresholds.append(Threshold((p + 1) * self.threshold_interval, 0.1))
 
 		for t in self.thresholds:
 			t.update(ts)
