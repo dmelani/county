@@ -20,10 +20,10 @@ class Dude(object):
 		self.l_x = x
 		self.l_y = y
 		self.l_z = z
+		gluLookAt(self.pos_x, self.pos_y, self.pos_z, self.l_x, self.l_y, self.l_z, 0.0, 1.0, 0.0)			
 
 	def percieve(self):
 		glMatrixMode(GL_PROJECTION)
 		glLoadIdentity()
 		gluPerspective(90,800.0/600.0,1.0,2000.0)
-		gluLookAt(self.pos_x, self.pos_y, self.pos_z, self.l_x, self.l_y, self.l_z, 0.0, 1.0, 0.0)			
 
