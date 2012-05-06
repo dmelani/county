@@ -36,9 +36,10 @@ class Engine(object):
 		except Queue.Empty:
 			pass
 		else:
-			event, param = data
+			event = data[0]
+			params = data[1:]
 			if event == 'add':
-				self.terra.add(param)
+				self.terra.add(params[0])
 			if event == 'randomize':
 				self.terra.randomize()
 	
