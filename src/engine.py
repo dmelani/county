@@ -48,4 +48,7 @@ class Engine(object):
 		for event in events:
 			if event.type == QUIT:
 				self.done = True
+			elif event.type == KEYDOWN:
+				if event.key == K_ESCAPE:
+					self.done = True
 
