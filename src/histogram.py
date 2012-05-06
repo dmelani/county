@@ -3,6 +3,7 @@ from OpenGL.GLU import *
 from OpenGL.GLUT import * 
 import time
 import datetime
+import random
 
 class Increment(object):
 	def __init__(self, amount, duration):
@@ -104,8 +105,8 @@ class Bin(object):
 		self.flux = [a for a in self.flux if a.is_complete is False] 
 	
 		ct = int((self.inc + self.amount) / self.threshold_interval)
-		for p in range(self.last_threshold, ct):
-			self.thresholds.append(Threshold((p + 1) * self.threshold_interval, 0.1))
+	#	for p in range(self.last_threshold, ct):
+	#		self.thresholds.append(Threshold((p + 1) * self.threshold_interval, 0.1))
 
 		for t in self.thresholds:
 			t.update(ts)
@@ -138,6 +139,7 @@ class Histogram(object):
 		self.last_ts = time.time() 	
 		self.width = 50.0
 		self.depth = 50.0
+		self.num_buckets = hours
 
 	def render(self):
 		dc = 0	
@@ -161,7 +163,13 @@ class Histogram(object):
 	def advance_day(self):
 		self.days.pop()
 		self.days.insert(0, HistogramRow(24))
-		
+
+	def randomize(self):
+		for x in range(0, len(self.days)):
+			self.advance_day()
+			for x in range(0, self.num_buckets):
+				self.days[0].add_over_time(x, random.choice(xrange(0, 400)), 10.0)
+
 	def update(self, ts):
 		for d in self.days:
 			d.update(ts)

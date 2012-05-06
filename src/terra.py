@@ -16,6 +16,9 @@ class Terra(object):
 	def add(self, amount):
 		self.histogram.add(amount)
 	
+	def randomize(self):
+		self.histogram.randomize()	
+
 	def revolve(self):
 		now = time.time()
 		delta = now - self.timestamp

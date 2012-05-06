@@ -39,7 +39,9 @@ class Engine(object):
 			event, param = data
 			if event == 'add':
 				self.terra.add(param)
-
+			if event == 'randomize':
+				self.terra.randomize()
+	
 	def handle_events(self):
 		events = pygame.event.get()
 		for event in events:
