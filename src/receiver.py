@@ -4,9 +4,10 @@ import SocketServer
 class ReceiverHandler(SocketServer.BaseRequestHandler):
 	def handle(self):
 		try:
-			(timestamp, data) = self.request[0].split()
-			print 'Received packet:', timestamp, data
-			self.server.queue.put_nowait((timestamp, data))	
+			words = self.request[0].split()
+			(command, params) = (words[0], words[1:])
+			print 'Received packet:', command, params
+			self.server.queue.put_nowait((command, params))	
 		except Exception:
 			print 'MALFORMED DATA RECEIVED'
 		except Full:

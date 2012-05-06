@@ -25,16 +25,21 @@ class Mediator(object):
 			return
 	
 	def handle_event(self, data):
-		timestamp, lines = data
-		try:
-			timestamp = int(timestamp)
-			lines = int(lines)
-		except ValueError:
-			lines = None
+		command = data[0]
+		if command == 'add':
+			params = data[1]
+			timestamp, lines = params
+			try:
+				timestamp = int(timestamp)
+				lines = int(lines)
+			except ValueError:
+				lines = None
 
-		if lines and self.last_event < timestamp:
-			increment = lines - self.last_num_lines
-			print 'Mediator routing event: add', increment
-			self.me_q.put(('add', increment), True)
-			self.last_num_lines = lines
-			self.last_event = timestamp
+			if lines and self.last_event < timestamp:
+				increment = lines - self.last_num_lines
+				print 'Mediator routing event: add', increment
+				self.me_q.put(('add', increment), True)
+				self.last_num_lines = lines
+				self.last_event = timestamp
+		if command == 'randomize':
+			self.me_q.put(('randomize', None))

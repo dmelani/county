@@ -15,11 +15,11 @@ class Engine(object):
 		self.terra = terra.Terra()
 		self.dude = dude.Dude()
 		self.dude.percieve()
-		self.dude.move(300.0, 100.0, 300.0)
-		self.dude.look_at(600.0, 3.5, 0.0)
 		self.done = False
 
 	def run(self):
+		self.dude.move(300.0, 100.0, 300.0)
+		self.dude.look_at(600.0, 3.5, 0.0)
 		while not self.done:
 			#do everything
 			self.handle_events()
