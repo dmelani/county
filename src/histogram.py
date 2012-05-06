@@ -168,7 +168,7 @@ class Histogram(object):
 		for x in range(0, len(self.days)):
 			self.advance_day()
 			for x in range(0, self.num_buckets):
-				self.days[0].add_over_time(x, random.choice(xrange(0, 400)), 10.0)
+				self.days[0].add_over_time(x, random.randint(0, 400), 10.0)
 
 	def update(self, ts):
 		for d in self.days:
