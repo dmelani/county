@@ -4,8 +4,8 @@ from OpenGL.GLUT import *
 from tools import Increment
 
 class Dude(object):
-	def __init__(self):
-
+	def __init__(self, aspect):
+		self.aspect = aspect
 		self.pos_x = 0.0
 		self.pos_y = 0.0
 		self.pos_z = 0.0
@@ -28,6 +28,6 @@ class Dude(object):
 	def perceive(self):
 		glMatrixMode(GL_PROJECTION)
 		glLoadIdentity()
-		gluPerspective(90,1920.0/1080.0,1.0,4000.0)
+		gluPerspective(90,self.aspect,1.0,4000.0)
 		gluLookAt(self.pos_x, self.pos_y, self.pos_z, self.l_x, self.l_y, self.l_z, 0.0, 1.0, 0.0)			
 

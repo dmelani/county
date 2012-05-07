@@ -13,7 +13,9 @@ class Engine(object):
 		self.me_q = me_q
 		self.firmament = firmament.Firmament()
 		self.terra = terra.Terra()
-		self.dude = dude.Dude()
+		x,y = self.firmament.modes[0]
+		aspect = float(x)/float(y)
+		self.dude = dude.Dude(aspect)
 		self.done = False
 
 	def run(self):

@@ -4,12 +4,14 @@ from OpenGL.GLUT import *
 import pygame
 
 class Firmament(object):
-	width = 1920 
-	height = 1080
+	width = 800 
+	height = 600
+	modes = []
 	def __init__(self):
 		print 'Firmament solidified...'
 		pygame.init()
-		pygame.display.set_mode((self.width,self.height), pygame.OPENGL|pygame.DOUBLEBUF)
+		self.modes = pygame.display.list_modes()
+		pygame.display.set_mode(self.modes[0], pygame.OPENGL|pygame.DOUBLEBUF|pygame.FULLSCREEN)
 		glViewport(0, 0, self.width, self.height)
 		glEnable(GL_DEPTH_TEST)
 		glDepthFunc(GL_LESS)
