@@ -45,6 +45,8 @@ class Engine(object):
 				self.terra.randomize()
 			if event == 'move_to':
 				self.dude.move_to(params[0], params[1], params[2])
+			if event == 'look_at':
+				self.dude.look_at(params[0], params[1], params[2])
 	
 	def handle_events(self):
 		events = pygame.event.get()

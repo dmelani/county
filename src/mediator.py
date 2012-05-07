@@ -46,7 +46,7 @@ class Mediator(object):
 			print 'Mediator routing event: randomize'
 			self.me_q.put(('randomize', None), True)
 		
-		if command == 'move_to':
+		if command == 'move_to' or command == 'look_at':
 			try:
 				x, y, z = data[1]
 				x = float(x)
@@ -57,4 +57,4 @@ class Mediator(object):
 				return	
 			else: 
 				print 'Mediator routing event: move_to', x, y, z
-				self.me_q.put(('move_to', x, y, z), True)
+				self.me_q.put((command, x, y, z), True)
