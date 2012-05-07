@@ -14,17 +14,17 @@ class Engine(object):
 		self.firmament = firmament.Firmament()
 		self.terra = terra.Terra()
 		self.dude = dude.Dude()
-		self.dude.percieve()
 		self.done = False
 
 	def run(self):
-		self.dude.move(300.0, 100.0, 300.0)
+		self.dude.move_to(300.0, 100.0, 300.0)
 		self.dude.look_at(600.0, 3.5, 0.0)
 		while not self.done:
 			#do everything
 			self.handle_events()
 			self.handle_queue()
 			self.firmament.clear()
+			self.dude.perceive()
 			self.terra.the_lone_range_rides_again()
 			pygame.display.flip()
 		print "Engine stopping..."
@@ -36,12 +36,15 @@ class Engine(object):
 		except Queue.Empty:
 			pass
 		else:
+			print 'Engine received:', data
 			event = data[0]
 			params = data[1:]
 			if event == 'add':
 				self.terra.add(params[0])
 			if event == 'randomize':
 				self.terra.randomize()
+			if event == 'move_to':
+				self.dude.move_to(params[0], params[1], params[2])
 	
 	def handle_events(self):
 		events = pygame.event.get()

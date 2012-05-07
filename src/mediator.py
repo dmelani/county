@@ -41,5 +41,20 @@ class Mediator(object):
 				self.me_q.put(('add', increment), True)
 				self.last_num_lines = lines
 				self.last_event = timestamp
+
 		if command == 'randomize':
-			self.me_q.put(('randomize', None))
+			print 'Mediator routing event: randomize'
+			self.me_q.put(('randomize', None), True)
+		
+		if command == 'move_to':
+			try:
+				x, y, z = data[1]
+				x = float(x)
+				y = float(y)
+				z = float(z)
+			except:	
+				print 'Mediator received invalid command:', command, parameters
+				return	
+			else: 
+				print 'Mediator routing event: move_to', x, y, z
+				self.me_q.put(('move_to', x, y, z), True)
