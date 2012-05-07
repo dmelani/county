@@ -19,8 +19,8 @@ class Engine(object):
 		self.done = False
 
 	def run(self):
-		self.dude.move_to(300.0, 100.0, 300.0)
-		self.dude.look_at(600.0, 3.5, 0.0)
+		self.dude.move_to(600.0, 100.0, 300.0)
+		self.dude.look_at(600.0, 100.0, 0.0)
 		while not self.done:
 			#do everything
 			self.handle_events()
