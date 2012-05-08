@@ -56,6 +56,10 @@ class Engine(object):
 			if event.type == QUIT:
 				self.done = True
 			elif event.type == KEYDOWN:
-				if event.key == K_ESCAPE:
+				if event.key == K_ESCAPE or event.key == K_q:
 					self.done = True
+				elif event.key == K_r:
+					self.terra.randomize()
+				elif event.key == K_a:
+					self.terra.add(50)
 
