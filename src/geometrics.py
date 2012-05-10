@@ -7,18 +7,19 @@ import sys
 
 class Geometrics(object):
 	_instance = None
+	blue_tex = None
+	red_tex = None
+
 	def __new__(cls, *args, **kwargs):
 		if not cls._instance:
 			cls._instance = super(Geometrics, cls).__new__(cls, *args, **kwargs)
+			try:
+				cls._instance.blue_tex = cls._instance.load_texture('src/textures/blue.bmp')
+				cls._instance.red_tex = cls._instance.load_texture('src/textures/red.bmp')
+			except:
+				print "Geometrics could not load textures:", traceback.format_exc()
+				sys.exit()
 		return cls._instance
-
-	def __init__(self):
-		try:
-			self.blue_tex = self.load_texture('src/textures/red.bmp')
-			self.red_tex = self.load_texture('src/textures/red.bmp')
-		except:
-			print "Geometrics could not load textures:", traceback.format_exc()
-			sys.exit()
 
 	def blue_cube(self):
 		glEnable(GL_TEXTURE_2D)
