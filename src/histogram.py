@@ -5,6 +5,7 @@ from tools import Increment
 import time
 import datetime
 import random
+from geometrics import Geometrics
 
 class Threshold(object):
 	def __init__(self, pos, fade_in = 1.0):
@@ -48,6 +49,7 @@ class Bin(object):
 		self.threshold_interval = 100
 		self.thresholds = []
 		self.last_threshold = 0
+		self.geos = Geometrics()
 
 	def render_thresholds(self):
 		for t in self.thresholds:
@@ -55,17 +57,10 @@ class Bin(object):
 	
 	def render(self):
 		glPushMatrix()
-		glTranslate(0, (self.amount + self.inc) / 2.0, 0)
+#		glTranslate(0, (self.amount + self.inc) / 2.0, 0)
 		glScale(self.width, self.amount + self.inc, self.depth)
-		
-		glPolygonOffset(1.0, 1.0)
-		glEnable(GL_POLYGON_OFFSET_FILL)
-		glColor(0x00/float(0xff), 0x50/float(0xff), 0x60/float(0xff))
-		glutSolidCube(1)
 
-		glDisable(GL_POLYGON_OFFSET_FILL)
-		glColor(0x00/float(0xff), 0xff/float(0xff), 0xff/float(0xff))
-		glutWireCube(1)
+		self.geos.blue_cube()
 
 		glPopMatrix()
 
