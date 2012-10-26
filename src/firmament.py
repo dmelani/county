@@ -9,7 +9,7 @@ class Firmament(object):
 		print 'Firmament solidified...'
 		pygame.init()
 		self.modes = pygame.display.list_modes()
-		pygame.display.set_mode(self.modes[0], pygame.OPENGL|pygame.DOUBLEBUF)#|pygame.FULLSCREEN)
+		pygame.display.set_mode(self.modes[0], pygame.OPENGL|pygame.DOUBLEBUF|pygame.FULLSCREEN)
 		glViewport(0, 0, self.modes[0][0], self.modes[0][1])
 		glEnable(GL_DEPTH_TEST)
 		glDepthFunc(GL_LESS)
